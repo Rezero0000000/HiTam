@@ -15,10 +15,10 @@ class Overworld {
     }
     map.src = "./images/maps/KitchenLower.png"
 
-    const hero = new GameObject(5,6)
+    const hero = new GameObject({x:5,y:6})
 
-    setTimeout(function () {
-      hero.draw(this.ctx)        
+    setTimeout(() => {
+      hero.sprite.draw(this.ctx)        
     }, 200)
   }
 }
