@@ -4,21 +4,26 @@ class Overworld {
     this.ctx = this.canvas.getContext("2d")
   }
 
-  init () {
-
-    console.log("")
-    const map = new Image()
-    map.onload = () => {
-      this.ctx.drawImage (
-        map,0,0
-      )  
+  coreLoop () {
+    const step = () => {
+      this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+      this.map.drawLowerImage(this.ctx)
+      
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.sprite.draw(this.ctx);
+      })
+      
+      this.map.drawUpperImage(this.ctx)
+      requestAnimationFrame(() => {
+        step()
+      })
     }
-    map.src = "./images/maps/KitchenLower.png"
-
-    const hero = new GameObject({x:5,y:6})
-
-    setTimeout(() => {
-      hero.sprite.draw(this.ctx)        
-    }, 200)
+    step()
   }
+
+  init () {
+    this.map = new OverworldMap(window.OverworldMaps.kitchen)
+    this.coreLoop()
+  }
+
 }
