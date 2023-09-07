@@ -1,29 +1,40 @@
 class Overworld {
-  constructor (config) {
-    this.canvas = config.element
-    this.ctx = this.canvas.getContext("2d")
-  }
+ constructor(config) {
+   this.canvas = config.element
+   this.ctx = this.canvas.getContext("2d");
+   this.map = null;
+ }
 
-  coreLoop () {
+  startGameLoop() {
     const step = () => {
-      this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
-      this.map.drawLowerImage(this.ctx)
-      
+      //Clear off the canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      //Draw Lower layer
+      this.map.drawLowerImage(this.ctx);
+
+      //Draw Game Objects
       Object.values(this.map.gameObjects).forEach(object => {
+        object.update()
         object.sprite.draw(this.ctx);
       })
+
+      //Draw Upper layer
+      this.map.drawUpperImage(this.ctx);
       
-      this.map.drawUpperImage(this.ctx)
       requestAnimationFrame(() => {
-        step()
+        step();   
       })
     }
-    step()
-  }
+    step();
+ }
 
-  init () {
-    this.map = new OverworldMap(window.OverworldMaps.kitchen)
-    this.coreLoop()
-  }
+ init() {
+  this.map = new OverworldMap(window.OverworldMaps.kitchen);
 
+  //this.directionInput = new DirectionInput();
+  //this.directionInput.init();
+
+  this.startGameLoop();
+ }
 }

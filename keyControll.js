@@ -1,5 +1,0 @@
-class keyControll {
-  constructor () {
-
-  }
-}
