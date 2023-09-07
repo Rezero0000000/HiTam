@@ -7,10 +7,7 @@ class Overworld {
 
   startGameLoop() {
     const step = () => {
-      //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      //Draw Lower layer
       this.map.drawLowerImage(this.ctx);
 
       //Draw Game Objects
@@ -19,7 +16,6 @@ class Overworld {
         object.sprite.draw(this.ctx);
       })
 
-      //Draw Upper layer
       this.map.drawUpperImage(this.ctx);
       
       requestAnimationFrame(() => {
