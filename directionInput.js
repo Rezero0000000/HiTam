@@ -1,5 +1,4 @@
- 
-class DirectionInput {
+ class DirectionInput {
   constructor() {
     this.heldDirections = [];
 
@@ -12,34 +11,30 @@ class DirectionInput {
       "KeyA": "left",
       "ArrowRight": "right",
       "KeyD": "right",
-    };
+    }
   }
 
   get direction() {
-    // Handle arah diagonal jika "W" dan "D" ditekan bersamaan
-    if (this.heldDirections.includes("up") && this.heldDirections.includes("right")) {
-      return "upRight";
-    }
-    // Tambahkan penanganan arah diagonal lainnya (contoh: "upLeft", "downRight", "downLeft")
-    // ...
-
     return this.heldDirections[0];
   }
 
   init() {
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener("keydown", e => {
       const dir = this.map[e.code];
       if (dir && this.heldDirections.indexOf(dir) === -1) {
         this.heldDirections.unshift(dir);
+        console.log(this.heldDirections)
       }
     });
-    document.addEventListener("keyup", (e) => {
+    document.addEventListener("keyup", e => {
       const dir = this.map[e.code];
       const index = this.heldDirections.indexOf(dir);
       if (index > -1) {
         this.heldDirections.splice(index, 1);
+        console.log(this.heldDirections)
       }
-    });
-  }
-}
+    })
 
+  }
+
+}
