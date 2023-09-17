@@ -20,7 +20,7 @@ class Overworld {
   init () {
     this.lowerMap = new Image();
     this.lowerMap.src = "./images/maps/DemoLower.png"
-    this.hero = new GameObject({
+    this.hero = new Person({
         x: 5, y: 6
     });
     this.coreLoop()
