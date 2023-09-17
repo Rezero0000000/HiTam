@@ -6,10 +6,13 @@ class Overworld {
 
   coreLoop () {
     const step = () => {
+      this.map.drawLowerMap(this.ctx)
+      
+      Object.values(this.map.gameObjects).forEach((obj) => {
+        obj.sprite.draw(this.ctx);
+      })
 
-      this.ctx.drawImage(this.lowerMap, 0,0);
-      this.hero.sprite.draw(this.ctx)
-      this.hero.update()
+      this.map.drawUpperMap(this.ctx);
       requestAnimationFrame(() => {
         step()
       })
@@ -18,11 +21,7 @@ class Overworld {
   }
 
   init () {
-    this.lowerMap = new Image();
-    this.lowerMap.src = "./images/maps/DemoLower.png"
-    this.hero = new Person({
-        x: 5, y: 6
-    });
+    this.map = new OverworldMap(window.OverworldMaps.Demo);
     this.coreLoop()
   }
 }
