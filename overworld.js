@@ -20,10 +20,6 @@ class Overworld {
   init () {
     this.lowerMap = new Image();
     this.lowerMap.src = "./images/maps/DemoLower.png"
-
-
-
-
     this.hero = new GameObject({
         x: 5, y: 6
     });

@@ -31,10 +31,9 @@ class GameObject {
     this.DOWN = false;
     this.LEFT = false;
     this.RIGHT = false;
-  }
 
-  update () {
-    window.addEventListener('keydown', (e) => {
+
+window.addEventListener('keydown', (e) => {
        switch (e.key) {
     case 'w':
       keys.w.pressed = true
@@ -71,7 +70,10 @@ class GameObject {
       break
   }
     })
+  }
 
+  update () {
+    
     if (keys.w.pressed){
       this.y -= 1;
     }
