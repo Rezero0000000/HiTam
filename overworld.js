@@ -10,6 +10,9 @@ class Overworld {
       
       Object.values(this.map.gameObjects).forEach((obj) => {
         obj.sprite.draw(this.ctx);
+        if (obj.isPlayer){
+          obj.update()
+        }
       })
 
       this.map.drawUpperMap(this.ctx);
