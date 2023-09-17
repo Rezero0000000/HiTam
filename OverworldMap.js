@@ -24,7 +24,9 @@ window.OverworldMaps = {
     lowerSrc: "./images/maps/DemoLower.png",
     upperSrc: "./images/maps/DemoUpper.png",
     gameObjects: {
-      hero: new Person({ x: 5, y: 6})
+      hero: new Person({
+        x: 5, y: 6, frameWidth: 32, frameHeight: 32
+      })
     }
   }
 }
