@@ -67,18 +67,25 @@ window.addEventListener('keydown', (e) => {
   }
 
   update () {
-     
-    if (keys.w.pressed){
-      this.y -= 1;
+     if (keys.w.pressed || keys.s.pressed || keys.a.pressed || keys.d.pressed) {
+    switch (true) {
+      case keys.w.pressed:
+        this.y -= 1;
+        break;
+      case keys.s.pressed:
+        this.y += 1;
+        break;
+      case keys.a.pressed:
+        this.x -= 1;
+        break;
+      case keys.d.pressed:
+        this.x += 1;
+        break;
+      default:
+        break;
     }
-    if (keys.s.pressed) {
-      this.y += 1;
-    }
-    if (keys.a.pressed) {
-      this.x -= 1;
-    }
-    if (keys.d.pressed) {
-      this.x += 1;
+  }
+    else {
     }
 
   }

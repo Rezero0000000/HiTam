@@ -21,11 +21,16 @@ class OverworldMap {
 
 window.OverworldMaps = {
   Demo: {
-    lowerSrc: "./images/maps/DemoLower.png",
+    lowerSrc: "./map.png",
     upperSrc: "./images/maps/DemoUpper.png",
     gameObjects: {
       hero: new Person({
-        x: 5, y: 6, frameWidth: 32, frameHeight: 32
+        x: 5, y: 6, frameWidth: 32, frameHeight: 32,
+        src: "./player.png"
+      }),
+      npc1: new GameObject({
+        x: 83, y: 80, frameWidth: 32, frameHeight: 32,
+        src: "./images/characters/people/npc1.png"
       })
     }
   }

@@ -15,7 +15,6 @@ class Overworld {
         }
       })
 
-      this.map.drawUpperMap(this.ctx);
       requestAnimationFrame(() => {
         step()
       })

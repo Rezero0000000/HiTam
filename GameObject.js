@@ -1,5 +1,3 @@
-
-
 class GameObject {
   constructor (config) {
     this.isPlayer = false
@@ -9,9 +7,14 @@ class GameObject {
     this.frameWidth = config.frameWidth;
     this.frameHeight = config.frameHeight;
 
+    this.currentAnimation = "idle";
+    this.animations = {
+      "idle": [[0, 2], [1,2], [2,2], [3,2]]
+    }
+
     this.sprite = new Sprite({
       gameObject: this,
-      src: "./images/characters/people/hero.png"
+      src: config.src || "./images/characters/people/hero.png"
     })
   }
 
