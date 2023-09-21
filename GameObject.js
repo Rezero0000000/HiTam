@@ -8,10 +8,7 @@ class GameObject {
     this.frameHeight = config.frameHeight;
 
     this.currentAnimation = "idle";
-    this.animations = {
-      "idle": [[0, 2], [1,2], [2,2], [3,2]]
-    }
-
+    this.animations = config.animations || false 
     this.sprite = new Sprite({
       gameObject: this,
       src: config.src || "./images/characters/people/hero.png"

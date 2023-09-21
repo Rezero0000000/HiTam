@@ -6,43 +6,34 @@ class Sprite {
     this.image.onload = (() => {
       this.isImage = true;
     })
+    console.log(this.gameObject.animations)
+
     this.image.src = config.src;
-
-    this.playAnimate = false;
-    this.animations = config.animations || {};
-    
-    this.currentAnimation = config.currentAnimation || "";
+    this.animations = this.gameObject.animations;
+    this.currentAnimation = "idle-left";
     this.currentAnimationFrame = 0;
-
-    this.animationFrameLimit = config.animationFrameLimit || 8;
+    this.animationFrameLimit = 10;
     this.animationFrameProgress = this.animationFrameLimit;
- 
   }
 
-  get frame () {
+  get frame() {
     return this.animations[this.currentAnimation][this.currentAnimationFrame]
   }
 
   setAnimation(key) {
     if (this.currentAnimation !== key) {
-      this.playAnimate = true;
       this.currentAnimation = key;
       this.currentAnimationFrame = 0;
       this.animationFrameProgress = this.animationFrameLimit;
     }
-    else {
-      this.playAnimate = false;
-    }
   }
-  
-  updateAnimationProgress() {
-    //Downtick frame progress
+
+  updateAnimationProgress () {
     if (this.animationFrameProgress > 0) {
       this.animationFrameProgress -= 1;
       return;
     }
 
-    //Reset the counter
     this.animationFrameProgress = this.animationFrameLimit;
     this.currentAnimationFrame += 1;
 
@@ -54,29 +45,29 @@ class Sprite {
   draw (ctx) {
     const x = this.gameObject.x;
     const y = this.gameObject.y;
-
     const frameWidth = this.gameObject.frameWidth;
     const frameHeight = this.gameObject.frameHeight;
 
-    if (this.playAnimate) {
-      const [frameX, frameY] = this.frame;
-      
+    if (this.animations) {
+
+    const [frameX, frameY] = this.frame;
+    
       this.isImage && ctx.drawImage(this.image, 
-        frameX * frameWidth, frameY * frameHeight,
+        frameX * 32, frameY * 32,
         frameWidth, frameHeight,
         x, y,
         frameWidth, frameHeight
       )
 
-      this.updateAnimationProgress();
+    this.updateAnimationProgress()
     }
     else {
-      this.isImage && ctx.drawImage(this.image, 
+    this.isImage && ctx.drawImage(this.image, 
         0, 0,
         frameWidth, frameHeight,
         x, y,
         frameWidth, frameHeight
       )
-    } 
+    }
   }
 }

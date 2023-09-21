@@ -12,22 +12,15 @@ const keys = {
     pressed: false
   }
 }
+let direction = "right";
 
 class Person extends GameObject{
   constructor(config) {
     super(config);
     this.isPlayer = true;
-    this.vel_x = 0;
-    this.vel_y = 0;
-    this.acc_x = 0;
-    this.acc_y = 0;
-    this.acceleration = 1;
-    this.friction = 0.1;
-    
-
 
 window.addEventListener('keydown', (e) => {
-       switch (e.key) {
+    switch (e.key) {
     case 'w':
       keys.w.pressed = true
       break
@@ -46,7 +39,7 @@ window.addEventListener('keydown', (e) => {
     })
 
  window.addEventListener('keyup', (e) => {
-       switch (e.key) {
+    switch (e.key) {
     case 'w':
       keys.w.pressed = false
       break
@@ -61,10 +54,9 @@ window.addEventListener('keydown', (e) => {
     case 'd':
       keys.d.pressed = false
       break
-  }
-    })
-
-  }
+    }
+  })
+}
 
   update () {
      if (keys.w.pressed || keys.s.pressed || keys.a.pressed || keys.d.pressed) {
@@ -76,17 +68,20 @@ window.addEventListener('keydown', (e) => {
         this.y += 1;
         break;
       case keys.a.pressed:
+        direction = "left"
         this.x -= 1;
         break;
       case keys.d.pressed:
+        direction = "right"
         this.x += 1;
         break;
       default:
         break;
     }
+    this.sprite.setAnimation(`walk-${direction}`)
   }
     else {
+      this.sprite.setAnimation(`idle-${direction}`)
     }
-
   }
 }
