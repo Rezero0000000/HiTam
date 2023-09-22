@@ -6,7 +6,6 @@ class Sprite {
     this.image.onload = (() => {
       this.isImage = true;
     })
-    console.log(this.gameObject.animations)
 
     this.image.src = config.src;
     this.animations = this.gameObject.animations;
