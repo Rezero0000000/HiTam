@@ -43,7 +43,7 @@ class Sprite {
 
   draw (ctx, cameraPerson) {
     const x = this.gameObject.x + 10 - cameraPerson.x;
-    const y = this.gameObject.y + 6- cameraPerson.y;
+    const y = this.gameObject.y + 10 - cameraPerson.y;
     const frameWidth = this.gameObject.frameWidth;
     const frameHeight = this.gameObject.frameHeight;
 
