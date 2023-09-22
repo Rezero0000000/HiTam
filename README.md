@@ -71,3 +71,11 @@
    }
    step();
 
+# movement character
+- ambil input kontroller
+- key down set Status direction true kalau up false
+- ketika status direction true set velocity
+- kalau false misal !UP && !DOWN set velocity 0
+- tambahkan koordinat dengan velocity
+- 
+
