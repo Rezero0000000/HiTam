@@ -10,8 +10,12 @@ class OverworldMap {
 
   }
 
-  drawLowerMap (ctx) {
-    ctx.drawImage (this.lowerMap, 0, 0);
+  drawLowerMap (ctx, cameraPerson) {
+    ctx.drawImage (
+      this.lowerMap,
+      cameraPerson.x, 
+      cameraPerson.y
+    );
   }
 
   drawUpperMap (ctx) {
@@ -29,12 +33,11 @@ window.OverworldMaps = {
         src: "./player.png",
         animations: {
       "idle-right": [[0, 2], [1,2], [2,2], [3,2]],
-      "walk-right": [[0,0], [1,0], [2,0], [3,0]], 
+      "walk-right": [[1,0], [0,0], [3,0], [2,0]], 
       "idle-left": [[0, 3], [1,3], [2,3], [3,3]],
       "walk-left": [[0,1], [1,1], [2,1], [3,1]],
     }
       }),
-      npc1: new GameObject({ x: 20, y: 20, frameWidth: 32, frameHeight: 32})
     }
   }
 }

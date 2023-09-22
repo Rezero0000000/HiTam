@@ -18,6 +18,8 @@ class Person extends GameObject{
   constructor(config) {
     super(config);
     this.isPlayer = true;
+    this.velocityX = 0;
+    this.velocityY = 0;
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
@@ -60,26 +62,31 @@ window.addEventListener('keydown', (e) => {
 
   update () {
      if (keys.w.pressed || keys.s.pressed || keys.a.pressed || keys.d.pressed) {
-    switch (true) {
-      case keys.w.pressed:
-        this.y -= 1;
-        break;
-      case keys.s.pressed:
-        this.y += 1;
-        break;
-      case keys.a.pressed:
+    
+      if(keys.w.pressed){
+        this.velocityY = 1;
+      }
+      if(keys.s.pressed){
+        this.velocityY = -1;
+      }
+      if(keys.a.pressed){
+        this.velocityX = 1;
         direction = "left"
-        this.x -= 1;
-        break;
-      case keys.d.pressed:
+      }
+      if(keys.d.pressed){
+        this.velocityX = -1;
         direction = "right"
-        this.x += 1;
-        break;
-      default:
-        break;
+      }
+      if(!keys.w.pressed && !keys.s.pressed) {
+        this.velocityY = 0;
+      }
+      if(!keys.a.pressed && !keys.d.pressed) {
+        this.velocityX = 0;
+      }
+      this.x += this.velocityX;
+      this.y += this.velocityY;
+      this.sprite.setAnimation(`walk-${direction}`)
     }
-    this.sprite.setAnimation(`walk-${direction}`)
-  }
     else {
       this.sprite.setAnimation(`idle-${direction}`)
     }

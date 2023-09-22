@@ -12,7 +12,7 @@ class Sprite {
     this.animations = this.gameObject.animations;
     this.currentAnimation = "idle-left";
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = 10;
+    this.animationFrameLimit = 5;
     this.animationFrameProgress = this.animationFrameLimit;
   }
 
@@ -42,9 +42,9 @@ class Sprite {
     }
   }
 
-  draw (ctx) {
-    const x = this.gameObject.x;
-    const y = this.gameObject.y;
+  draw (ctx, cameraPerson) {
+    const x = this.gameObject.x + 10 - cameraPerson.x;
+    const y = this.gameObject.y + 6- cameraPerson.y;
     const frameWidth = this.gameObject.frameWidth;
     const frameHeight = this.gameObject.frameHeight;
 
