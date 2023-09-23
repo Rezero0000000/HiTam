@@ -16,7 +16,7 @@ class Sprite {
   }
 
   get frame() {
-    return this.animations[this.currentAnimation][this.currentAnimationFrame]
+    return this.animations[this.currentAnimation][this.currentAnimationFrame];
   }
 
   setAnimation(key) {
@@ -37,7 +37,7 @@ class Sprite {
     this.currentAnimationFrame += 1;
 
     if (this.frame === undefined) {
-      this.currentAnimationFrame = 0
+      this.currentAnimationFrame = 0;
     }
   }
 
@@ -56,17 +56,17 @@ class Sprite {
         frameWidth, frameHeight,
         x, y,
         frameWidth, frameHeight
-      )
+      );
 
-    this.updateAnimationProgress()
+      this.updateAnimationProgress();
     }
     else {
-    this.isImage && ctx.drawImage(this.image, 
+      this.isImage && ctx.drawImage(this.image, 
         0, 0,
         frameWidth, frameHeight,
         x, y,
         frameWidth, frameHeight
-      )
+      );
     }
   }
 }

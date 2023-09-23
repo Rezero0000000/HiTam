@@ -1,7 +1,7 @@
 class Overworld {
   constructor (config) {
     this.canvas = config.element;
-    this.ctx = this.canvas.getContext("2d")
+    this.ctx = this.canvas.getContext("2d");
   }
 
   coreLoop () {
@@ -13,17 +13,17 @@ class Overworld {
       }
       
       let delta = (timestampMs - previousMs) / 1000;
-      const cameraPerson = this.map.gameObjects.hero
+      const cameraPerson = this.map.gameObjects.hero;
       
       while (delta >= stepTime) {
        
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.map.drawLowerMap(this.ctx, cameraPerson)
+      this.map.drawLowerMap(this.ctx, cameraPerson);
      
       Object.values(this.map.gameObjects).forEach((obj) => {
         obj.sprite.draw(this.ctx, cameraPerson);
         if (obj.isPlayer){
-          obj.update()
+          obj.update();
         }
       })
         delta -= stepTime;
@@ -37,6 +37,6 @@ class Overworld {
 
   init () {
     this.map = new OverworldMap(window.OverworldMaps.Demo);
-    this.coreLoop()
+    this.coreLoop();
   }
 }

@@ -21,7 +21,7 @@ class Person extends GameObject{
     this.velocityX = 0;
     this.velocityY = 0;
 
-window.addEventListener('keydown', (e) => {
+  window.addEventListener('keydown', (e) => {
     switch (e.key) {
     case 'w':
       keys.w.pressed = true
@@ -37,10 +37,10 @@ window.addEventListener('keydown', (e) => {
     case 'd':
       keys.d.pressed = true
       break
-  }
-    })
+    }
+  });
 
- window.addEventListener('keyup', (e) => {
+  window.addEventListener('keyup', (e) => {
     switch (e.key) {
     case 'w':
       keys.w.pressed = false
@@ -57,7 +57,7 @@ window.addEventListener('keydown', (e) => {
       keys.d.pressed = false
       break
     }
-  })
+  });
 }
 
   update () {
@@ -85,10 +85,10 @@ window.addEventListener('keydown', (e) => {
       }
       this.x += this.velocityX;
       this.y += this.velocityY;
-      this.sprite.setAnimation(`walk-${direction}`)
+      this.sprite.setAnimation(`walk-${direction}`);
     }
     else {
-      this.sprite.setAnimation(`idle-${direction}`)
+      this.sprite.setAnimation(`idle-${direction}`);
     }
   }
 }
