@@ -22,7 +22,6 @@
    shadow.src = "";  //src
 
 # Buat class GameObject
-
     kurleb templatenya kaya gini
     class GameObject {
         constructor(config) {
@@ -71,7 +70,7 @@
    }
    step();
 
-# Cara ribet membuat coreLoop
+# Implementasi delta time
 
 coreLoop () {
     let previousMs;
@@ -82,19 +81,9 @@ coreLoop () {
       }
       
       let delta = (timestampMs - previousMs) / 1000;
-      const cameraPerson = this.map.gameObjects.hero
       
       while (delta >= stepTime) {
-       
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.map.drawLowerMap(this.ctx, cameraPerson)
-     
-      Object.values(this.map.gameObjects).forEach((obj) => {
-        obj.sprite.draw(this.ctx, cameraPerson);
-        if (obj.isPlayer){
-          obj.update()
-        }
-      })
+        // Game Logic
         delta -= stepTime;
       }
     
@@ -102,39 +91,29 @@ coreLoop () {
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick); 
-  }
+}
 
-- coreLoop () {: Ini adalah deklarasi awal dari fungsi coreLoop.
+- Inisialisasi Variabel Waktu Sebelumnya: Mulailah dengan menginisialisasi variabel yang akan digunakan
+untuk menyimpan waktu frame sebelumnya. Ini biasanya diatur ke undefined pada awalnya.
 
-- let previousMs;: Variabel previousMs digunakan untuk menyimpan timestamp (waktu dalam milidetik) dari frame sebelumnya.
+- Buat sebuah loop utama dengan kondisie ketika delta >= stepTime:
 
-- const stepTime = 1 / 40;: Variabel konstan stepTime digunakan untuk menentukan interval waktu (dalam detik) antara setiap langkah permainan. Nilai ini setara dengan 1/40 detik atau sekitar 25 milidetik.
+- a. Hitung Delta Time: Hitung selisih waktu antara waktu frame saat ini dan waktu frame sebelumnya.
+Ini dapat dihitung dengan rumus (timestampSaatIni - timestampSebelumnya) / 1000, di mana 1000 mengonversi 
+waktu dari milidetik ke detik.
 
-- const tick = (timestampMs) => {: Ini adalah deklarasi fungsi bernama tick yang akan dijalankan setiap kali browser meminta frame animasi.
+- b. Game Logic: Gunakan delta time ini dalam perhitungan logika permainan Anda. Ini termasuk pergerakan
+objek, animasi, dan hal-hal lain yang memengaruhi permainan seiring berjalannya waktu.
 
-- if (previousMs === undefined) { previousMs = timestampMs; }: Pengecekan apakah previousMs sudah didefinisikan. Jika belum, maka previousMs diinisialisasi dengan nilai timestamp saat ini.
+- c. Perbarui Waktu Sebelumnya: Setelah logika permainan diterapkan,
+perbarui variabel waktu sebelumnya dengan waktu saat ini minus sisa delta time yang belum digunakan.
 
-- let delta = (timestampMs - previousMs) / 1000;: Variabel delta digunakan untuk menghitung selisih waktu (dalam detik) antara frame saat ini dan frame sebelumnya.
+- Request Animation Frame: Terakhir, gunakan fungsi requestAnimationFrame
+(atau ekivalennya dalam bahasa lain) untuk mengatur iterasi berikutnya dari loop utama. Hal 
+ini akan menjaga permainan berjalan dengan framerate yang sesuai.# movement character
 
-- const cameraPerson = this.map.gameObjects.hero: Variabel cameraPerson digunakan untuk menyimpan objek pemeran utama (hero) yang digunakan sebagai kamera untuk menggambar objek-objek lainnya.
 
-- while (delta >= stepTime) {: Ini adalah loop yang akan terus berjalan selama delta lebih besar atau sama dengan stepTime.
-
-- this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);: Ini digunakan untuk membersihkan (menghapus) isi canvas sebelum menggambar frame permainan berikutnya.
-
-- this.map.drawLowerMap(this.ctx, cameraPerson): Ini memanggil metode drawLowerMap dari objek this.map untuk menggambar bagian peta bawah (lower map) dengan menggunakan this.ctx (konteks canvas) dan mengikuti posisi kamera yang ditentukan oleh cameraPerson.
-
-- Object.values(this.map.gameObjects).forEach((obj) => { ... }: Ini adalah loop yang digunakan untuk menggambar dan memperbarui seluruh objek permainan yang ada dalam this.map.gameObjects. Setiap objek diambil, dan metode draw dari sprite-nya dipanggil untuk menggambar objek tersebut di canvas. Jika objek adalah pemain (player), maka metode update dari objek tersebut juga dipanggil.
-
-- delta -= stepTime;: Nilai delta dikurangkan sebesar stepTime untuk menunjukkan bahwa satu langkah permainan telah dilakukan.
-
-- previousMs = timestampMs - delta * 1000;: Nilai previousMs diperbarui dengan timestamp saat ini dikurangi dengan sisa waktu yang tidak digunakan dalam langkah permainan.
-
-- requestAnimationFrame(tick);: Ini adalah cara untuk mengatur agar fungsi tick dipanggil lagi untuk frame animasi berikutnya. Dengan demikian, perulangan utama berlanjut.
-
-- Kode ini secara keseluruhan digunakan untuk mengatur loop permainan yang menjalankan frame demi frame dengan interval waktu tetap, membersihkan canvas, menggambar objek-objek permainan, dan memperbarui posisi kamera.
-
-# movement character
+# Movement
 - ambil input kontroller
 - key down set Status direction true kalau up false
 - ketika status direction true set velocity
@@ -147,7 +126,6 @@ coreLoop () {
 contoh :
   const x = this.gameObject.x + 20 - cameraPerson.x;
   const y = this.gameObject.y + 6- cameraPerson.y;
-
 
   drawLowerMap (ctx, cameraPerson) {
     ctx.drawImage (
