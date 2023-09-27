@@ -13,8 +13,9 @@ class OverworldMap {
   drawLowerMap (ctx, cameraPerson) {
     ctx.drawImage (
       this.lowerMap,
-      cameraPerson.x, 
-      cameraPerson.y
+      0,0
+      //cameraPerson.x, 
+      //cameraPerson.y
     );
   }
 
@@ -25,18 +26,12 @@ class OverworldMap {
 
 window.OverworldMaps = {
   Demo: {
-    lowerSrc: "./map.png",
+    lowerSrc: "./prototype.png",
     upperSrc: "./images/maps/DemoUpper.png",
     gameObjects: {
       hero: new Person({
-        x: 5, y: 6, frameWidth: 32, frameHeight: 32,
-        src: "./player.png",
-        animations: {
-         "idle-right": [[0, 2], [1,2], [2,2], [3,2]],
-         "walk-right": [[1,0], [0,0], [3,0], [2,0]], 
-         "idle-left": [[0, 3], [1,3], [2,3], [3,3]],
-         "walk-left": [[0,1], [1,1], [2,1], [3,1]],
-        }
+        x: 5, y: 6, frameWidth: 16, frameHeight: 16,
+        src: "./images/Shadow.png"
       }),
     }
   }
