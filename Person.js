@@ -51,7 +51,10 @@ class Person extends GameObject{
 
   update () {
      if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
-   
+      if (keys.jump.pressed) {
+        this.velocityY = -3 *2;
+      } 
+
       if(keys.a.pressed){
         this.velocityX = 2;
         direction = "left"
@@ -59,6 +62,9 @@ class Person extends GameObject{
       if(keys.d.pressed){
         this.velocityX = -2;
         direction = "right"
+      }
+      if (!keys.jump.pressed) {
+        this.velocityY = 0;
       }
       
       if(!keys.a.pressed && !keys.d.pressed) {
@@ -71,7 +77,7 @@ class Person extends GameObject{
     }
     else {
       if (this.y < utils.screenHeight - 38) {
-        this.y += 1;
+        this.y += 2;
       }
       this.sprite.setAnimation(`idle-${direction}`);
     }
