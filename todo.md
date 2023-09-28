@@ -2,5 +2,5 @@
 - screenGame  [Done]
 - Animation   [Done]
 - Camera      [30%]
-- Jump
+- Jump        [30%]
 - collision

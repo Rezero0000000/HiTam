@@ -56,11 +56,11 @@ class Person extends GameObject{
       } 
 
       if(keys.a.pressed){
-        this.velocityX = 2;
+        this.velocityX = -2;
         direction = "left"
       }
       if(keys.d.pressed){
-        this.velocityX = -2;
+        this.velocityX = 2;
         direction = "right"
       }
       if (!keys.jump.pressed) {
@@ -73,13 +73,14 @@ class Person extends GameObject{
       
       this.x += this.velocityX;
       this.y += this.velocityY;
-      this.sprite.setAnimation(`walk-${direction}`);
+      this.sprite.setAnimation(`walk-left`);
+      //this.sprite.setAnimation(`walk-${direction}`);
     }
     else {
       if (this.y < utils.screenHeight - 38) {
         this.y += 2;
       }
-      this.sprite.setAnimation(`idle-${direction}`);
+      this.sprite.setAnimation(`idle-left`);
     }
   }
 }

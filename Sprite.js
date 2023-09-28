@@ -18,7 +18,7 @@ class Sprite {
   }
 
   get frame() {
-    return this.animations["idle-left"][this.currentAnimationFrame];
+    return this.animations[this.currentAnimation][this.currentAnimationFrame];
   }
 
   setAnimation(key) {
