@@ -10,13 +10,15 @@ class Sprite {
     this.image.src = config.src;
     this.animations = this.gameObject.animations;
     this.currentAnimation = "idle-left";
+
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = 5;
+    this.animationFrameLimit = 3;
     this.animationFrameProgress = this.animationFrameLimit;
+
   }
 
   get frame() {
-    return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    return this.animations["idle-left"][this.currentAnimationFrame];
   }
 
   setAnimation(key) {
@@ -35,15 +37,14 @@ class Sprite {
 
     this.animationFrameProgress = this.animationFrameLimit;
     this.currentAnimationFrame += 1;
-
     if (this.frame === undefined) {
       this.currentAnimationFrame = 0;
     }
   }
 
   draw (ctx, cameraPerson) {
-    const x = this.gameObject.x //+ 10 - cameraPerson.x;
-    const y = this.gameObject.y //+ 10 - cameraPerson.y;
+    const x = this.gameObject.x + 10 - cameraPerson.x;
+    const y = this.gameObject.y ;
     const frameWidth = this.gameObject.frameWidth;
     const frameHeight = this.gameObject.frameHeight;
 
@@ -52,7 +53,7 @@ class Sprite {
     const [frameX, frameY] = this.frame;
     
       this.isImage && ctx.drawImage(this.image, 
-        frameX * 32, frameY * 32,
+        frameX * frameWidth, frameY * frameHeight,
         frameWidth, frameHeight,
         x, y,
         frameWidth, frameHeight

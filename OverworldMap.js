@@ -4,35 +4,27 @@ class OverworldMap {
 
     this.lowerMap = new Image();
     this.lowerMap.src = config.lowerSrc;
-
-    this.upperMap = new Image();
-    this.upperMap.src = config.upperSrc;
-
   }
 
   drawLowerMap (ctx, cameraPerson) {
     ctx.drawImage (
       this.lowerMap,
-      0,0
-      //cameraPerson.x, 
-      //cameraPerson.y
+      cameraPerson.x - 10, 
+      0
     );
-  }
-
-  drawUpperMap (ctx) {
-    ctx.drawImage (this.upperMap, 0, 0);
   }
 }
 
 window.OverworldMaps = {
   Demo: {
     lowerSrc: "./prototype.png",
-    upperSrc: "./images/maps/DemoUpper.png",
     gameObjects: {
       hero: new Person({
-        x: 5, y: utils.screenHeight - 16, frameWidth: 16, frameHeight: 16,
+        x: 5, y: utils.screenHeight - 100, frameWidth: 16, frameHeight: 16,
         src: "./images/Shadow.png",
-
+        animations: {
+          "idle-left": [[0,0], [1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0]]
+        }
       }),
     }
   }

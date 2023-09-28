@@ -40,7 +40,7 @@ class Person extends GameObject{
       break
     case 'a':
       keys.a.pressed = false
-      break
+      break   
 
     case 'd':
       keys.d.pressed = false
@@ -64,11 +64,15 @@ class Person extends GameObject{
       if(!keys.a.pressed && !keys.d.pressed) {
         this.velocityX = 0;
       }
+      
       this.x += this.velocityX;
       this.y += this.velocityY;
       this.sprite.setAnimation(`walk-${direction}`);
     }
     else {
+      if (this.y < utils.screenHeight - 38) {
+        this.y += 1;
+      }
       this.sprite.setAnimation(`idle-${direction}`);
     }
   }

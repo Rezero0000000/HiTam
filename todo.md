@@ -1,4 +1,5 @@
 ## TO:DO
 - screenGame  [Done]
-- Animation
+- Animation   [Done]
+- Camera      [50%]
 - Jump
