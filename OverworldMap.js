@@ -4,12 +4,18 @@ class OverworldMap {
 
     this.lowerMap = new Image();
     this.lowerMap.src = config.lowerSrc;
+    this.xMap = 0;
   }
 
   drawLowerMap (ctx, cameraPerson) {
-    ctx.drawImage (
+    
+    if (cameraPerson.x >= 210) {
+      this.xMap -= 1 
+      console.log("Hh")
+    }
+    ctx.drawImage (  
       this.lowerMap,
-      cameraPerson.x - 10, 
+      this.xMap,
       0
     );
   }
@@ -20,7 +26,7 @@ window.OverworldMaps = {
     lowerSrc: "./prototype.png",
     gameObjects: {
       hero: new Person({
-        x: 5, y: utils.screenHeight - 100, frameWidth: 16, frameHeight: 16,
+        x: 100, y: utils.screenHeight - 100, frameWidth: 16, frameHeight: 16,
         src: "./images/Shadow.png",
         animations: {
           "idle-left": [[0,0], [1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0]]

@@ -53,11 +53,11 @@ class Person extends GameObject{
      if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
    
       if(keys.a.pressed){
-        this.velocityX = -1;
+        this.velocityX = 2;
         direction = "left"
       }
       if(keys.d.pressed){
-        this.velocityX = 1;
+        this.velocityX = -2;
         direction = "right"
       }
       
