@@ -30,8 +30,9 @@ window.OverworldMaps = {
     upperSrc: "./images/maps/DemoUpper.png",
     gameObjects: {
       hero: new Person({
-        x: 5, y: 6, frameWidth: 16, frameHeight: 16,
-        src: "./images/Shadow.png"
+        x: 5, y: utils.screenHeight - 16, frameWidth: 16, frameHeight: 16,
+        src: "./images/Shadow.png",
+
       }),
     }
   }

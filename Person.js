@@ -1,11 +1,8 @@
 const keys = {
-  w: {
+  jump: {
     pressed: false
   },
   a: {
-    pressed: false
-  },
-  s: {
     pressed: false
   },
   d: {
@@ -24,14 +21,10 @@ class Person extends GameObject{
   window.addEventListener('keydown', (e) => {
     switch (e.key) {
     case 'w':
-      keys.w.pressed = true
+      keys.jump.pressed = true
       break
     case 'a':
       keys.a.pressed = true
-      break
-
-    case 's':
-      keys.s.pressed = true
       break
 
     case 'd':
@@ -43,14 +36,10 @@ class Person extends GameObject{
   window.addEventListener('keyup', (e) => {
     switch (e.key) {
     case 'w':
-      keys.w.pressed = false
+      keys.jump.pressed = false
       break
     case 'a':
       keys.a.pressed = false
-      break
-
-    case 's':
-      keys.s.pressed = false
       break
 
     case 'd':
@@ -61,25 +50,17 @@ class Person extends GameObject{
 }
 
   update () {
-     if (keys.w.pressed || keys.s.pressed || keys.a.pressed || keys.d.pressed) {
-    
-      if(keys.w.pressed){
-        this.velocityY = 1;
-      }
-      if(keys.s.pressed){
-        this.velocityY = -1;
-      }
+     if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
+   
       if(keys.a.pressed){
-        this.velocityX = 1;
+        this.velocityX = -1;
         direction = "left"
       }
       if(keys.d.pressed){
-        this.velocityX = -1;
+        this.velocityX = 1;
         direction = "right"
       }
-      if(!keys.w.pressed && !keys.s.pressed) {
-        this.velocityY = 0;
-      }
+      
       if(!keys.a.pressed && !keys.d.pressed) {
         this.velocityX = 0;
       }
