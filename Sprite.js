@@ -12,7 +12,7 @@ class Sprite {
     this.currentAnimation = "idle-left";
 
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = 3;
+    this.animationFrameLimit = 8;
     this.animationFrameProgress = this.animationFrameLimit;
 
   }
@@ -34,7 +34,12 @@ class Sprite {
       this.animationFrameProgress -= 1;
       return;
     }
-
+    if (this.currentAnimation == "walk-left" || this.currentAnimation == "walk-right"){
+      this.animationFrameLimit = 5;
+    }
+    else {
+      this.animationFrameLimit = 8
+    }
     this.animationFrameProgress = this.animationFrameLimit;
     this.currentAnimationFrame += 1;
     if (this.frame === undefined) {

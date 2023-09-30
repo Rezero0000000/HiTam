@@ -6,7 +6,7 @@ class Overworld {
 
   coreLoop () {
     let previousMs;
-    const stepTime = 1 / 40;
+    const stepTime = 1 / 60;
     const tick = (timestampMs) => {
       if (previousMs === undefined) {
           previousMs = timestampMs;

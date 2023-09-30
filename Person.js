@@ -15,14 +15,14 @@ class Person extends GameObject{
   constructor(config) {
     super(config);
     this.isPlayer = true;
-    this.velocityX = 0;
-    this.velocityY = 0;
+    this.velocity = {
+      x: 0,
+      y: 0
+    }
 
   window.addEventListener('keydown', (e) => {
     switch (e.key) {
-    case 'w':
-      keys.jump.pressed = true
-      break
+
     case 'a':
       keys.a.pressed = true
       break
@@ -35,9 +35,7 @@ class Person extends GameObject{
 
   window.addEventListener('keyup', (e) => {
     switch (e.key) {
-    case 'w':
-      keys.jump.pressed = false
-      break
+
     case 'a':
       keys.a.pressed = false
       break   
@@ -47,40 +45,55 @@ class Person extends GameObject{
       break
     }
   });
+
+  window.addEventListener("keypress", (e) => {
+    switch (e.key) {
+    case 'w':
+      keys.jump.pressed = true
+      break
+    }
+  })
 }
 
   update () {
      if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
       if (keys.jump.pressed) {
-        this.velocityY = -3 *2;
+        this.velocity.y = -3 *2;
+        keys.jump.pressed = false;
       } 
 
       if(keys.a.pressed){
-        this.velocityX = -2;
+        this.velocity.x = -2;
         direction = "left"
       }
       if(keys.d.pressed){
-        this.velocityX = 2;
+        this.velocity.x = 2;
         direction = "right"
       }
       if (!keys.jump.pressed) {
-        this.velocityY = 0;
+        this.velocity.y = 0;
       }
       
       if(!keys.a.pressed && !keys.d.pressed) {
-        this.velocityX = 0;
+        this.velocity.x = 0;
       }
       
-      this.x += this.velocityX;
-      this.y += this.velocityY;
-      this.sprite.setAnimation(`walk-left`);
-      //this.sprite.setAnimation(`walk-${direction}`);
+      this.x += this.velocity.x;
+      this.y += this.velocity.y;
+
+      this.sprite.setAnimation(`walk-${direction}`);
     }
     else {
       if (this.y < utils.screenHeight - 38) {
-        this.y += 2;
+        this.velocity.y = 4;
+        this.velocity.y += 0.001;
+      } else {
+        this.velocity.y = 0
       }
-      this.sprite.setAnimation(`idle-left`);
+      this.y += this.velocity.y
+
+      this.sprite.setAnimation(`idle-${direction}`);
     }
+
   }
 }

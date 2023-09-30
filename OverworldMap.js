@@ -8,11 +8,6 @@ class OverworldMap {
   }
 
   drawLowerMap (ctx, cameraPerson) {
-    /*
-    if (cameraPerson.x >= 210) {
-      this.xMap -= 1 
-      console.log("Hh")
-    }*/
     ctx.drawImage (  
       this.lowerMap,
       this.xMap,
@@ -29,8 +24,10 @@ window.OverworldMaps = {
         x: 100, y: utils.screenHeight - 38, frameWidth: 16, frameHeight: 16,
         src: "./images/Shadow.png",
         animations: {
-          "idle-left": [[0,0], [1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0]],
-          "walk-left": [[0,1], [1,1], [2,1], [3,1], [4,1], [5,1], [6,1], [7,1]]
+          "idle-right": [[0,0], [2,0], [3,0], [1,0]],
+          "walk-right": [[0,1], [1,1], [2,1], [3,1], [4,1], [5,1], [6,1], [7,1]],
+          "idle-left": [[7,2], [5,2], [4,2], [6,2]],
+          "walk-left": [[7,3], [6,3], [5,3], [4,3], [3,3], [2,3], [1,3], [0,3]]
         }
       }),
     }
