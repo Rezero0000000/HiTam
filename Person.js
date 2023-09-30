@@ -11,10 +11,16 @@ const keys = {
 }
 let direction = "right";
 
+let isJumping = false;
+let jumpHeight = 10; // Tinggi lompatan
+let gravity = 0.5; // Gravitasi
+let jumpForce = -10; // Kecepatan awal lompatan ke atas
+
 class Person extends GameObject{
   constructor(config) {
     super(config);
-    this.isPlayer = true;
+    this.isPlayer = true; 
+    this.initialY = this.y;
     this.velocity = {
       x: 0,
       y: 0
@@ -22,7 +28,9 @@ class Person extends GameObject{
 
   window.addEventListener('keydown', (e) => {
     switch (e.key) {
-
+    case 'w':
+      keys.jump.pressed = true
+      break
     case 'a':
       keys.a.pressed = true
       break
@@ -35,7 +43,9 @@ class Person extends GameObject{
 
   window.addEventListener('keyup', (e) => {
     switch (e.key) {
-
+    case 'w':
+      keys.jump.pressed = false
+      break
     case 'a':
       keys.a.pressed = false
       break   
@@ -46,20 +56,14 @@ class Person extends GameObject{
     }
   });
 
-  window.addEventListener("keypress", (e) => {
-    switch (e.key) {
-    case 'w':
-      keys.jump.pressed = true
-      break
-    }
-  })
 }
 
   update () {
      if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
       if (keys.jump.pressed) {
-        this.velocity.y = -3 *2;
-        keys.jump.pressed = false;
+        this.velocity.y = jumpForce; // Mengatur kecepatan awal lompatan
+        this.velocity.y -= gravity; // Meningkatkan kecepatan vertikal dengan gravitasi
+        isJumping = true;
       } 
 
       if(keys.a.pressed){
@@ -81,19 +85,18 @@ class Person extends GameObject{
       this.x += this.velocity.x;
       this.y += this.velocity.y;
 
+      // Memeriksa apakah karakter mencapai tinggi lompatan maksimum
+      if (this.y <= this.initialY - jumpHeight) {
+        this.velocity.y = 0; // Menghentikan pergerakan ke atas
+      }
+      if (this.y >= this.initialY) {
+        this.velocity.y = 0; // Menghentikan pergerakan ke bawah
+        isJumping = false; // Mengatur karakter kembali ke tanah
+      }
       this.sprite.setAnimation(`walk-${direction}`);
     }
     else {
-      if (this.y < utils.screenHeight - 38) {
-        this.velocity.y = 4;
-        this.velocity.y += 0.001;
-      } else {
-        this.velocity.y = 0
-      }
-      this.y += this.velocity.y
-
       this.sprite.setAnimation(`idle-${direction}`);
     }
-
   }
 }
