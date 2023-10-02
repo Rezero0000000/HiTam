@@ -21,7 +21,7 @@ window.OverworldMaps = {
     lowerSrc: "./prototype.png",
     gameObjects: {
       hero: new Person({
-        x: 100, y: utils.screenHeight - 38, frameWidth: 16, frameHeight: 16,
+        x: 100, y: utils.screenHeight - 38 - 100, frameWidth: 16, frameHeight: 16,
         src: "./images/Shadow.png",
         animations: {
           "idle-right": [[0,0], [2,0], [3,0], [1,0]],

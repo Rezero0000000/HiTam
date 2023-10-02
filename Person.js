@@ -12,10 +12,11 @@ const keys = {
 let direction = "right";
 
 let isJumping = false;
-let jumpHeight = 10; // Tinggi lompatan
-let gravity = 0.5; // Gravitasi
-let jumpForce = -10; // Kecepatan awal lompatan ke atas
-
+let jumpHeight = 20; // Tinggi lompatan
+let gravity = 1; // Gravitasi
+let jumpForce = -20; // Kecepatan awal lompatan ke atas
+let vely = 0;
+let friction = 0.2
 class Person extends GameObject{
   constructor(config) {
     super(config);
@@ -25,47 +26,63 @@ class Person extends GameObject{
       x: 0,
       y: 0
     }
+    this.movingProgressRemaining = 0;
 
+    this.isPlayerControlled = config.isPlayerControlled || false;
+
+    this.directionUpdate = {
+      "up": ["y", -1],
+      "down": ["y", 1],
+      "left": ["x", -1],
+      "right": ["x", 1],
+    }
   window.addEventListener('keydown', (e) => {
-    switch (e.key) {
-    case 'w':
-      keys.jump.pressed = true
-      break
-    case 'a':
-      keys.a.pressed = true
-      break
-
-    case 'd':
-      keys.d.pressed = true
-      break
+    if(e.key== 'a') {
+       keys.a.pressed = true;
+    }
+    if(e.key== 'w') {
+      if(isJumping == false) {
+         vely = -10;
+      }
+    }
+    if(e.key == 'd') {
+      keys.right = true;
     }
   });
 
   window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-    case 'w':
-      keys.jump.pressed = false
-      break
-    case 'a':
-      keys.a.pressed = false
-      break   
-
-    case 'd':
-      keys.d.pressed = false
-      break
+    if(e.key== 'a') {
+       keys.a.pressed = true;
+    }
+    if(e.key== 'w') {
+      if(isJumping == false) {
+         vely = -3;
+      }
+    }
+    if(e.key == 'd') {
+      keys.right = true;
     }
   });
-
 }
 
   update () {
-     if (keys.jump.pressed || keys.a.pressed || keys.d.pressed) {
-      if (keys.jump.pressed) {
-        this.velocity.y = jumpForce; // Mengatur kecepatan awal lompatan
-        this.velocity.y -= gravity; // Meningkatkan kecepatan vertikal dengan gravitasi
-        isJumping = true;
+      if(isJumping == false) {
+            vely *= friction;
       } 
+      else {
+          vely += gravity;
+      }
+        isJumping = true;
+    if (this.y > utils.screenHeight - 38 ) {
+      vely = 0;
+    }
 
+      
+    this.y += vely;
+
+
+
+     if (keys.a.pressed || keys.d.pressed) {
       if(keys.a.pressed){
         this.velocity.x = -2;
         direction = "left"
@@ -84,19 +101,14 @@ class Person extends GameObject{
       
       this.x += this.velocity.x;
       this.y += this.velocity.y;
-
-      // Memeriksa apakah karakter mencapai tinggi lompatan maksimum
-      if (this.y <= this.initialY - jumpHeight) {
-        this.velocity.y = 0; // Menghentikan pergerakan ke atas
-      }
-      if (this.y >= this.initialY) {
-        this.velocity.y = 0; // Menghentikan pergerakan ke bawah
-        isJumping = false; // Mengatur karakter kembali ke tanah
-      }
-      this.sprite.setAnimation(`walk-${direction}`);
+      if (this.y < utils.screenHeight - 38 ) {
+       // this.sprite.setAnimation(`walk-${direction}`);
+      } 
     }
     else {
-      this.sprite.setAnimation(`idle-${direction}`);
+      if (this.y < utils.screenHeight - 38 ) {
+        //this.sprite.setAnimation(`idle-${direction}`);
+      }
     }
   }
 }
