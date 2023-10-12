@@ -1,4 +1,19 @@
+#include <stdio.h>
 #include "./include/raylib.h"
+#include <stdlib.h>
+// function
+void unloadEverything ();
+void render ();
+void logic ();
+void loadEverything ();
+
+// Variable
+#define GRAVITY 0.5
+#define FRICTION 0.7
+
+Color myColor = {0x1D, 0x21, 0x2D, 255};
+int screenWidth = 800;
+int screenHeight = 800;
 
 typedef struct Player {
   Texture2D player_t;
@@ -6,28 +21,19 @@ typedef struct Player {
 } Player;
 
 Texture map;
-
-void unloadEverything ();
-void loadEverything () {
-  map = LoadTexture("prototype.png");
-}
-
-#define GRAVITY 0.5;
-#define FRICTION 0.7;
+Player *shadow;
 
 int main() {
-    int screenWidth = 800;
-    int screenHeight = 800;
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 
-    Color myColor = {0x1D, 0x21, 0x2D, 255};
     InitWindow(screenWidth, screenHeight, "HiTam");
+    SetTargetFPS(30);
 
-    SetTargetFPS(60);
-
+    loadEverything();
     while (!WindowShouldClose()) {
+        logic ();
         BeginDrawing();
-        ClearBackground(myColor); 
-        DrawTexture(map, 0, screenHeight - map.height, WHITE);
+        render();
         EndDrawing();
     }
     
@@ -37,7 +43,32 @@ int main() {
     return 0;
 }
 
+void loadEverything () {
+  map = LoadTexture("prototype.png");
+
+  shadow =(Player *) malloc(sizeof(Player));
+  shadow->player_t = LoadTexture("./images/Shadow.png");
+  shadow->player_p = (Vector2){1.5, screenHeight - shadow->player_t.height};
+}
+
 void unloadEverything () {
   UnloadTexture(map);
+  UnloadTexture(shadow->player_t);
+  free(shadow);
 }
+
+void logic() {
+
+}
+
+void render () {
+  ClearBackground(myColor); 
+  DrawTexture(map, 0, screenHeight - map.height, WHITE);  
+
+  DrawTexture(shadow->player_t, shadow->player_p.x, shadow->player_p.y, WHITE);
+}
+
+
+
+
 

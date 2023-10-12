@@ -1,6 +1,6 @@
 ## TO:DO
 - screenGame  [Done]
-- Animation   [Done]
-- Camera      [30%]
-- Jump        [30%]
+- Animation   []
+- Camera      []
+- Jump        []
 - collision
