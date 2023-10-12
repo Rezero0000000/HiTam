@@ -1,4 +1,3 @@
-
 #include "./include/raylib.h"
 
 typedef struct Player {
@@ -6,11 +5,15 @@ typedef struct Player {
   Vector2 player_p;
 } Player;
 
+Texture map;
+
 void unloadEverything ();
-
 void loadEverything () {
-
+  map = LoadTexture("prototype.png");
 }
+
+#define GRAVITY 0.5;
+#define FRICTION 0.7;
 
 int main() {
     int screenWidth = 800;
@@ -19,7 +22,6 @@ int main() {
     Color myColor = {0x1D, 0x21, 0x2D, 255};
     InitWindow(screenWidth, screenHeight, "HiTam");
 
-    Texture2D map = LoadTexture("prototype.png");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
@@ -28,12 +30,14 @@ int main() {
         DrawTexture(map, 0, screenHeight - map.height, WHITE);
         EndDrawing();
     }
-
-    UnloadTexture(map);
+    
+    unloadEverything();
     CloseWindow();
 
     return 0;
 }
 
-
+void unloadEverything () {
+  UnloadTexture(map);
+}
 
