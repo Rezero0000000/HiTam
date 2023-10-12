@@ -11,15 +11,14 @@ void loadEverything ();
 
 // Variable
 #define FRICTION 0.7
-#define SPEED 15.0f
-#define JUMP_POWER 300.0f
+#define SPEED 2.0f
+#define JUMP_POWER 50.0f
 
 Color myColor = {0x1D, 0x21, 0x2D, 255};
 int screenWidth = 800;
 int screenHeight = 800;
-int gravity = 5.0f;
+int gravity = 2.0f;
 int vel_y = 0;
-bool isJump;
 
 typedef struct Player {
   Rectangle player_rect;
@@ -69,8 +68,7 @@ void unloadEverything () {
 
 void logic() {
 
-  if (shadow->player_p.y <= screenHeight - (float) (shadow->player_t.height / 4) - 110) {
-    
+  if (shadow->player_p.y <= screenHeight - shadow->player_t.height) {
     vel_y += gravity;
   } else {
     vel_y = 0;
@@ -83,7 +81,7 @@ void logic() {
     shadow->player_p.x -= SPEED;
   }
   if (IsKeyPressed(KEY_W)) {
-    vel_y = -50;
+    shadow->player_p.y += 200;
   } 
 
   shadow->player_p.y += vel_y;
@@ -94,3 +92,8 @@ void render () {
   DrawTexture(map, 0, screenHeight - map.height, WHITE);  
   DrawTextureRec(shadow->player_t, shadow->player_rect, shadow->player_p, WHITE);
 }
+
+
+
+
+
