@@ -10,12 +10,15 @@ void logic ();
 void loadEverything ();
 
 // Variable
-#define GRAVITY 0.5
+#define VELOCITY_Y 2.0;
 #define FRICTION 0.7
+#define SPEED 2.0f
+#define JUMP_POWER 50.0f
 
 Color myColor = {0x1D, 0x21, 0x2D, 255};
 int screenWidth = 800;
 int screenHeight = 800;
+int gravity = 2.0f;
 
 typedef struct Player {
   Rectangle player_rect;
@@ -53,7 +56,7 @@ void loadEverything () {
 
   shadow =(Player *) malloc(sizeof(Player));
   shadow->player_t = LoadTexture("./images/Shadow.png");
-  shadow->player_p = (Vector2){1.5, screenHeight - shadow->player_t.height};
+  shadow->player_p = (Vector2){1.5f, 400.0f};
   shadow->player_rect = (Rectangle) {0.0f, 0.0f, (float) shadow->player_t.width / 8, (float) shadow->player_t.height / 4};
 }
 
@@ -64,53 +67,21 @@ void unloadEverything () {
 }
 
 void logic() {
-  
-  if (IsKeyDown(KEY_W)) {
-    up = true;
+
+  if (shadow->player_p.y <= screenHeight - shadow->player_t.height) {
+    gravity += VELOCITY_Y;
+    shadow->player_p.y += gravity;
   }
 
-  if (IsKeyDown(KEY_S)) {
-    down = true;
-  }
-
-  if (IsKeyDown(KEY_A)) {
-    left = true;
-  }
   if (IsKeyDown(KEY_D)) {
-    right = true;
+    shadow->player_p.x += SPEED;
   }
-  
-  if (IsKeyUp(KEY_W)) {
-    up = false;
+  if (IsKeyDown(KEY_A)) {
+    shadow->player_p.x -= SPEED;
   }
-  
-  if (IsKeyUp(KEY_S)) {
-    down = false;
+  if (IsKeyDown(KEY_W)) {
+    shadow->player_p.y -= SPEED;
   }
-
-  if (IsKeyUp(KEY_A)) {
-    left = false;
-  }
-
-  if (IsKeyUp(KEY_D)) {
-    right = false;
-  }
-
-  if (up || down || left || right) {
-    if (up) {
-      shadow->player_p.y += 1.5;
-    }
-    if (down) {
-      shadow->player_p.y -= 1.5;
-    }
-    if (left) {
-      shadow->player_p.x -= 1.5;
-    }
-    if (right) {
-      shadow->player_p.x += 1.5;
-    }
-  }
-
 }
 
 void render () {
