@@ -30,7 +30,9 @@ typedef struct Player {
 Texture map;
 Player *shadow;
 RenderTexture rt_buffer;
+int animation[4][8] = {
 
+};
 bool up, down, left, right;
 
 int main() {
@@ -50,6 +52,7 @@ int main() {
         BeginDrawing();
       {
 
+        ClearBackground(myColor); 
          float scale = fmin(
             (float)GetScreenWidth()/rt_buffer.texture.width,
             (float)GetScreenHeight()/rt_buffer.texture.height
