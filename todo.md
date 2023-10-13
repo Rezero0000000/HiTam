@@ -1,7 +1,7 @@
 ## TO:DO
 - screenGame  [Done]
 - Controll    [70%]
-- scalling    []
+- scalling    [70%]
 - Animation   []
 - Camera      []
 - Jump        []
