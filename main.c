@@ -27,12 +27,23 @@ typedef struct Player {
   Vector2 player_p;
 } Player;
 
+typedef struct animationFrame {
+  char name[100];
+  int animation[4][8][2];
+} animationFrame;
+
 Texture map;
 Player *shadow;
+animationFrame *shadow_animation;
 RenderTexture rt_buffer;
-int animation[4][8] = {
 
+int animation[4][8][2] = {
+  {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
+  {{0, 1}, {1, 1}, {2, 1}, {3, 1}},
+  {{0, 2}, {1, 2}, {2, 2}, {3, 2}},
+  {{0, 3}, {1, 3}, {2, 3}, {3, 3}}
 };
+
 bool up, down, left, right;
 
 int main() {
@@ -116,6 +127,11 @@ void logic() {
 
 void render () {
   ClearBackground(myColor); 
-  DrawTexture(map, 0, win_screen.y - map.height, WHITE);  
+  DrawTexture(map, 0, win_screen.y - map.height, WHITE); 
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; i < 4; j++) {
+
+    }
+  }
   DrawTextureRec(shadow->player_t, shadow->player_rect, shadow->player_p, WHITE);
 }
