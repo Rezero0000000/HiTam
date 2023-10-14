@@ -36,17 +36,22 @@ Texture map;
 Player *shadow;
 animationFrame *shadow_animation;
 RenderTexture rt_buffer;
+int framesCounter = 0;
+int framesSpeed = 8; 
 
 int animation[4][8][2] = {
-  {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
+  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}, // idle
   {{0, 1}, {1, 1}, {2, 1}, {3, 1}},
   {{0, 2}, {1, 2}, {2, 2}, {3, 2}},
   {{0, 3}, {1, 3}, {2, 3}, {3, 3}}
 };
 
 bool up, down, left, right;
+int y;
+int x = 0;
 
 int main() {
+  x = 0;
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 
     InitWindow(win_screen.x, win_screen.y, "HiTam");
@@ -96,6 +101,8 @@ void loadEverything () {
   shadow->player_t = LoadTexture("./images/Shadow.png");
   shadow->player_p = (Vector2){1.5f, 400.0f};
   shadow->player_rect = (Rectangle) {0.0f, 0.0f, (float) shadow->player_t.width / 8, (float) shadow->player_t.height / 4};
+
+  y = 0;
 }
 
 void unloadEverything () {  
@@ -106,6 +113,19 @@ void unloadEverything () {
 }
 
 void logic() {
+
+
+  framesCounter++;
+  
+  if (framesCounter >= (60/framesSpeed)){
+    framesCounter = 0;
+  if (x >= 4) x = 0;
+    printf("%d", x);
+    shadow->player_rect.x = 16 * x;
+    shadow->player_rect.y = 16 * y;
+    x++;
+  }
+
   if (shadow->player_p.y <= win_screen.y - (float) (shadow->player_t.height / 4) - 110) {
     vel_y += gravity;
   } else {
@@ -128,10 +148,10 @@ void logic() {
 void render () {
   ClearBackground(myColor); 
   DrawTexture(map, 0, win_screen.y - map.height, WHITE); 
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; i < 4; j++) {
-
-    }
+  /*
+  if (IsKeyPressed(KEY_SPACE)) {
+    printf("%d, %f\n",animation[0][i][0], shadow->player_rect.height);
   }
+  */
   DrawTextureRec(shadow->player_t, shadow->player_rect, shadow->player_p, WHITE);
 }
