@@ -113,17 +113,16 @@ void unloadEverything () {
 }
 
 void logic() {
-
-
   framesCounter++;
-  
   if (framesCounter >= (60/framesSpeed)){
     framesCounter = 0;
-  if (x >= 4) x = 0;
+ /* if (x >= 4) x = 0;
     printf("%d", x);
-    shadow->player_rect.x = 16 * x;
-    shadow->player_rect.y = 16 * y;
+    shadow->player_rect.x = 66 * x;
+    shadow->player_rect.y = 66 * y;
     x++;
+  */
+    
   }
 
   if (shadow->player_p.y <= win_screen.y - (float) (shadow->player_t.height / 4) - 110) {
