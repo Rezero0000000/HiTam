@@ -32,6 +32,12 @@ typedef struct animationFrame {
   int animation[4][8][2];
 } animationFrame;
 
+typedef struct animations {
+  char name[100];
+  Vector2 frame[10];
+
+} animations;
+
 Texture map;
 Player *shadow;
 animationFrame *shadow_animation;
@@ -40,7 +46,7 @@ int framesCounter = 0;
 int framesSpeed = 8; 
 
 int animation[4][8][2] = {
-  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}, // idle
+  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}, 
   {{0, 1}, {1, 1}, {2, 1}, {3, 1}},
   {{0, 2}, {1, 2}, {2, 2}, {3, 2}},
   {{0, 3}, {1, 3}, {2, 3}, {3, 3}}
@@ -50,10 +56,21 @@ bool up, down, left, right;
 int y;
 int x = 0;
 
+animations shadow_anim[4] = {
+  {"idle-left",  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}},
+  {"walk_left",  {{0, 1}, {1, 1}, {2, 1}, {3, 1}}},
+  {"idle_rigth", {{0, 2}, {1, 2}, {2, 2}, {3, 2}}},
+  {"walk_right", {{0, 3}, {1, 3}, {2, 3}, {3, 3}}},
+};
+
+Vector2 idle_left[4] = {{0, 0}, {1, 0}, {2, 0}, {3, 0}};
+Vector2 idle_rigth[4] = {{0, 1}, {1, 1}, {2, 1}, {3, 1}};
+Vector2 walk_left[4] = {{0, 2}, {1, 2}, {2, 2}, {3, 2}};
+Vector2 walk_right[4] = {{0, 3}, {1, 3}, {2, 3}, {3, 3}};
+
 int main() {
   x = 0;
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
-
     InitWindow(win_screen.x, win_screen.y, "HiTam");
     SetTargetFPS(30);
 
@@ -122,7 +139,6 @@ void logic() {
     shadow->player_rect.y = 66 * y;
     x++;
   */
-    
   }
 
   if (shadow->player_p.y <= win_screen.y - (float) (shadow->player_t.height / 4) - 110) {
