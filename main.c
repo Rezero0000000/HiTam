@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <string.h>
 
 // function
 void unloadEverything ();
@@ -38,6 +39,13 @@ typedef struct animations {
 
 } animations;
 
+animations shadow_anim[4] = {
+  {"idle-left",  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}},
+  {"walk_left",  {{0, 1}, {1, 1}, {2, 1}, {3, 1}}},
+  {"idle_rigth", {{0, 2}, {1, 2}, {2, 2}, {3, 2}}},
+  {"walk_right", {{0, 3}, {1, 3}, {2, 3}, {3, 3}}},
+};
+
 Texture map;
 Player *shadow;
 animationFrame *shadow_animation;
@@ -56,17 +64,12 @@ bool up, down, left, right;
 int y;
 int x = 0;
 
-animations shadow_anim[4] = {
-  {"idle-left",  {{0, 0}, {1, 0}, {2, 0}, {3, 0}}},
-  {"walk_left",  {{0, 1}, {1, 1}, {2, 1}, {3, 1}}},
-  {"idle_rigth", {{0, 2}, {1, 2}, {2, 2}, {3, 2}}},
-  {"walk_right", {{0, 3}, {1, 3}, {2, 3}, {3, 3}}},
-};
-
 Vector2 idle_left[4] = {{0, 0}, {1, 0}, {2, 0}, {3, 0}};
 Vector2 idle_rigth[4] = {{0, 1}, {1, 1}, {2, 1}, {3, 1}};
 Vector2 walk_left[4] = {{0, 2}, {1, 2}, {2, 2}, {3, 2}};
 Vector2 walk_right[4] = {{0, 3}, {1, 3}, {2, 3}, {3, 3}};
+
+char currentAnimation[100]  = "idle-left";
 
 int main() {
   x = 0;
@@ -79,6 +82,7 @@ int main() {
         logic ();
         BeginTextureMode(rt_buffer);
         {
+
          render();
         };
          EndTextureMode();
@@ -130,17 +134,21 @@ void unloadEverything () {
 }
 
 void logic() {
+
+  for (int i = 0; i < 4; i++) {
+    if (strcmp(shadow_anim[i].name, currentAnimation) == 0) {
+        memcpy(currentFrame, shadow_anim[i].frame, sizeof(currentFrame));
+        break;
+    }
+  }
+
+  // Animation
   framesCounter++;
   if (framesCounter >= (60/framesSpeed)){
     framesCounter = 0;
- /* if (x >= 4) x = 0;
-    printf("%d", x);
-    shadow->player_rect.x = 66 * x;
-    shadow->player_rect.y = 66 * y;
-    x++;
-  */
   }
 
+  // Controll
   if (shadow->player_p.y <= win_screen.y - (float) (shadow->player_t.height / 4) - 110) {
     vel_y += gravity;
   } else {
@@ -149,12 +157,15 @@ void logic() {
 
   if (IsKeyDown(KEY_D)) {
     shadow->player_p.x += SPEED;
+    strcpy(currentAnimation, "idle_rigth");
   }
   if (IsKeyDown(KEY_A)) {
     shadow->player_p.x -= SPEED;
+    strcpy(currentAnimation, "idle_left");
   }
   if (IsKeyPressed(KEY_W)) {
     vel_y = -50;
+    printf("%s: %f, %f\n",currentAnimation, currentFrame[1].x, currentFrame[1].y);
   } 
 
   shadow->player_p.y += vel_y;
@@ -163,10 +174,5 @@ void logic() {
 void render () {
   ClearBackground(myColor); 
   DrawTexture(map, 0, win_screen.y - map.height, WHITE); 
-  /*
-  if (IsKeyPressed(KEY_SPACE)) {
-    printf("%d, %f\n",animation[0][i][0], shadow->player_rect.height);
-  }
-  */
   DrawTextureRec(shadow->player_t, shadow->player_rect, shadow->player_p, WHITE);
 }
