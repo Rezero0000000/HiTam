@@ -52,14 +52,14 @@ animationFrame *shadow_animation;
 RenderTexture rt_buffer;
 int framesCounter = 0;
 int framesSpeed = 8; 
-
+/*
 int animation[4][8][2] = {
   {{0, 0}, {1, 0}, {2, 0}, {3, 0}}, 
   {{0, 1}, {1, 1}, {2, 1}, {3, 1}},
   {{0, 2}, {1, 2}, {2, 2}, {3, 2}},
   {{0, 3}, {1, 3}, {2, 3}, {3, 3}}
 };
-
+*/
 bool up, down, left, right;
 int y;
 int x = 0;
@@ -70,9 +70,13 @@ Vector2 walk_left[4] = {{0, 2}, {1, 2}, {2, 2}, {3, 2}};
 Vector2 walk_right[4] = {{0, 3}, {1, 3}, {2, 3}, {3, 3}};
 
 char currentAnimation[100]  = "idle-left";
+Vector2 currentFrame[10];
 
 int main() {
-  x = 0;
+    x = 0;
+
+    // Window
+
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(win_screen.x, win_screen.y, "HiTam");
     SetTargetFPS(30);
@@ -134,18 +138,18 @@ void unloadEverything () {
 }
 
 void logic() {
-
   for (int i = 0; i < 4; i++) {
     if (strcmp(shadow_anim[i].name, currentAnimation) == 0) {
         memcpy(currentFrame, shadow_anim[i].frame, sizeof(currentFrame));
         break;
     }
   }
-
-  // Animation
+  
   framesCounter++;
   if (framesCounter >= (60/framesSpeed)){
     framesCounter = 0;
+    // animation logic here
+
   }
 
   // Controll
