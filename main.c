@@ -52,6 +52,7 @@ animationFrame *shadow_animation;
 RenderTexture rt_buffer;
 int framesCounter = 0;
 int framesSpeed = 8; 
+int currentFrameCounter = 0;
 /*
 int animation[4][8][2] = {
   {{0, 0}, {1, 0}, {2, 0}, {3, 0}}, 
@@ -116,6 +117,11 @@ int main() {
     return 0;
 }
 
+
+
+
+
+
 void loadEverything () {
   rt_buffer = LoadRenderTexture(win_screen.x, win_screen.y);
   SetTextureFilter(rt_buffer.texture, TEXTURE_FILTER_POINT);
@@ -125,7 +131,7 @@ void loadEverything () {
   shadow =(Player *) malloc(sizeof(Player));
   shadow->player_t = LoadTexture("./images/Shadow.png");
   shadow->player_p = (Vector2){1.5f, 400.0f};
-  shadow->player_rect = (Rectangle) {0.0f, 0.0f, (float) shadow->player_t.width / 8, (float) shadow->player_t.height / 4};
+  shadow->player_rect = (Rectangle) {0.0f, 0.0f, (float) shadow->player_t.width / 8 , (float) shadow->player_t.height / 4};
 
   y = 0;
 }
@@ -137,19 +143,24 @@ void unloadEverything () {
   free(shadow);
 }
 
+
 void logic() {
   for (int i = 0; i < 4; i++) {
     if (strcmp(shadow_anim[i].name, currentAnimation) == 0) {
-        memcpy(currentFrame, shadow_anim[i].frame, sizeof(currentFrame));
+        for (int j = 0; j < 4; j++) {
+            currentFrame[j] = shadow_anim[i].frame[j];
+        }
         break;
     }
   }
-  
+  // Animation
   framesCounter++;
+
   if (framesCounter >= (60/framesSpeed)){
     framesCounter = 0;
-    // animation logic here
-
+    currentFrameCounter++;
+    if (currentFrameCounter > 4) currentFrameCounter = 0; 
+    shadow->player_rect = (Rectangle) {(float) shadow->player_t.width / 8 * (float) currentFrame[currentFrameCounter].x,(float) shadow->player_t.height / 4 * ( float) currentFrame[currentFrameCounter].y, (float) shadow->player_t.width / 8 , (float) shadow->player_t.height / 4};
   }
 
   // Controll
@@ -165,7 +176,7 @@ void logic() {
   }
   if (IsKeyDown(KEY_A)) {
     shadow->player_p.x -= SPEED;
-    strcpy(currentAnimation, "idle_left");
+    strcpy(currentAnimation, "idle-left");
   }
   if (IsKeyPressed(KEY_W)) {
     vel_y = -50;
@@ -174,6 +185,9 @@ void logic() {
 
   shadow->player_p.y += vel_y;
 }
+
+
+
 
 void render () {
   ClearBackground(myColor); 

@@ -76,5 +76,7 @@ Ini adalah tempat di mana scaling sesungguhnya terjadi.
 Perhatikan penggunaan `rt_buffer.texture` sebagai sumber tekstur, dan 
 pemilihan Rectangle yang sesuai untuk mengatur area gambar.
 
+8. Cara membuat animasi sprites:
 
+method 1: membutuhkan variabel currentAnimation buat menampung nama animasi yang sedang di jalankan, dan setiap controll direction di tekan maka currentAnimation bakal di update 
 
