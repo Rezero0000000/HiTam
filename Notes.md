@@ -1,53 +1,64 @@
+
+### Animation logic
+
+method 1: membutuhkan variabel currentAnimation buat menampung nama animasi yang 
+sedang di jalankan, dan setiap controll direction di tekan maka 
+currentAnimation bakal di update 
+
+
 ### Scaling
-RenderTexture rt_buffer;
-Vector2 win_screen = (Vector2){900.0f, 800.0f};
 
-int main() {
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
+    RenderTexture rt_buffer;
+    Vector2 win_screen = (Vector2){900.0f, 800.0f};
 
-    InitWindow(win_screen.x, win_screen.y, "HiTam");
-    SetTargetFPS(30);
+    int main() {
+        SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
 
-    loadEverything();
-    while (!WindowShouldClose()) {
-        BeginTextureMode(rt_buffer);
+        InitWindow(win_screen.x, win_screen.y, "HiTam");
+        SetTargetFPS(30);
+
+        loadEverything();
+        while (!WindowShouldClose()) {
+            BeginTextureMode(rt_buffer);
+            {
+                render();
+            };
+            EndTextureMode();
+            BeginDrawing();
         {
-         render();
-        };
-         EndTextureMode();
-        BeginDrawing();
-      {
 
-         float scale = fmin(
-            (float)GetScreenWidth()/rt_buffer.texture.width,
-            (float)GetScreenHeight()/rt_buffer.texture.height
-          );
+            float scale = fmin(
+                (float)GetScreenWidth()/rt_buffer.texture.width,
+                (float)GetScreenHeight()/rt_buffer.texture.height
+            );
 
-        DrawTexturePro(
-          rt_buffer.texture,
-          (Rectangle){0.0f, 0.0f, rt_buffer.texture.width, -rt_buffer.texture.height},
-          (Rectangle){
+            DrawTexturePro(
+                rt_buffer.texture,
+                (Rectangle){0.0f, 0.0f, rt_buffer.texture.width, -rt_buffer.texture.height},
+                (Rectangle){
                       (GetScreenWidth() - (rt_buffer.texture.width*scale))*0.5f,
                       (GetScreenHeight() - (rt_buffer.texture.height*scale))*0.5f,
                       rt_buffer.texture.width*scale, rt_buffer.texture.height*scale
-        }, (Vector2){0.0f, 0.0f}, 0.0f, WHITE);
-      }
+                }, (Vector2){0.0f, 0.0f}, 0.0f, WHITE);
+        }
 
-      EndDrawing();
+        EndDrawing();
+        
+        }
+        unloadEverything();
+        CloseWindow();
+        return 0;
     }
-    unloadEverything();
-    CloseWindow();
-    return 0;
-}
 
-void loadEverything () {
-  rt_buffer = LoadRenderTexture(win_screen.x, win_screen.y);
-  SetTextureFilter(rt_buffer.texture, TEXTURE_FILTER_POINT);
-}
+    void loadEverything () {
+        rt_buffer = LoadRenderTexture(win_screen.x, win_screen.y);
+        SetTextureFilter(rt_buffer.texture, TEXTURE_FILTER_POINT);
+    }
 
-void unloadEverything () {  
-  UnloadRenderTexture(rt_buffer);
-}
+    void unloadEverything () {  
+        UnloadRenderTexture(rt_buffer);
+    }
+
 1. `RenderTexture rt_buffer;` adalah objek RenderTexture yang akan 
 digunakan untuk merender konten sebelum menampilkannya di jendela utama. 
 Ini digunakan untuk mengubah ukuran dan skala konten sebelum rendering ke layar.
@@ -75,8 +86,3 @@ RenderTexture harus diperbesar atau diperkecil agar cocok di jendela.
 Ini adalah tempat di mana scaling sesungguhnya terjadi. 
 Perhatikan penggunaan `rt_buffer.texture` sebagai sumber tekstur, dan 
 pemilihan Rectangle yang sesuai untuk mengatur area gambar.
-
-8. Cara membuat animasi sprites:
-
-method 1: membutuhkan variabel currentAnimation buat menampung nama animasi yang sedang di jalankan, dan setiap controll direction di tekan maka currentAnimation bakal di update 
-

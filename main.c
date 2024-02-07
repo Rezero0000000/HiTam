@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include "./include/raylib.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
 #include <string.h>
+#include "./include/raylib.h"
 
 // Function
 void unloadEverything ();
@@ -26,7 +26,6 @@ typedef struct Player {
 typedef struct animations {
   char name[100];
   Vector2 frame[10];
-
 } animations;
 
 animations shadow_anim[4] = {
@@ -37,7 +36,6 @@ animations shadow_anim[4] = {
 };
 
 // Variable
-
 Color myColor = {0x1D, 0x21, 0x2D, 255};
 Vector2 win_screen = (Vector2){900.0f, 800.0f};
 int gravity = 5.0f;
@@ -103,6 +101,9 @@ int main() {
     CloseWindow();
     return 0;
 }
+
+
+// ----------------================  [ Memory ] ================------------------------
 
 
 void loadEverything () {
