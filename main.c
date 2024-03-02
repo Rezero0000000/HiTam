@@ -12,7 +12,6 @@ void logic ();
 void loadEverything ();
 
 // Constant
-#define FRICTION 0.7
 #define SPEED 15.0f
 
 // Struct
@@ -48,8 +47,7 @@ int framesSpeed = 8;
 int currentFrameCounter = 0;
 
 bool up, down, left, right;
-int y;
-int x = 0;
+
 
 char currentAnimation[100]  = "idle-left";
 Vector2 currentFrame[10];
@@ -58,7 +56,6 @@ Vector2 currentFrame[10];
 // ----------------================  [ Main FUnction ] ================------------------------
 
 int main() {
-    x = 0;
 
     // Window
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
@@ -119,7 +116,6 @@ void loadEverything () {
   shadow->player_p = (Vector2){0,0};
   shadow->player_rect = (Rectangle) {0.0f, 0.0f, (float) shadow->player_t.width / 8 , (float) shadow->player_t.height / 4};
 
-  y = 0;
 }
 
 void unloadEverything () {  
@@ -148,16 +144,13 @@ void logic() {
   framesCounter++;
 
   if (framesCounter >= (35/framesSpeed)){
-
-
     framesCounter = 0;
+    
     if (currentFrameCounter > 7) currentFrameCounter = 0; 
-
     shadow->player_rect = (Rectangle) {
       (float) shadow->player_t.width / 8 * (float) currentFrame[currentFrameCounter].x,(float) shadow->player_t.height / 4 * ( float) currentFrame[currentFrameCounter].y,
       (float) shadow->player_t.width / 8 , (float) shadow->player_t.height / 4
     };
-
     currentFrameCounter++;
   }
 
