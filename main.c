@@ -39,7 +39,6 @@ Color myColor = {0x1D, 0x21, 0x2D, 255};
 Vector2 win_screen = (Vector2){250.0f, 250.0f};
 int gravity = 5.0f;
 int vel_y = 0;
-bool isJump;
 
 Texture map;
 Player *shadow;
@@ -154,7 +153,6 @@ void logic() {
     framesCounter = 0;
     if (currentFrameCounter > 7) currentFrameCounter = 0; 
 
-//    printf("status: %s, x: %f,  y: %f\n",currentAnimation, currentFrame[currentFrameCounter].x , currentFrame[currentFrameCounter].y);
     shadow->player_rect = (Rectangle) {
       (float) shadow->player_t.width / 8 * (float) currentFrame[currentFrameCounter].x,(float) shadow->player_t.height / 4 * ( float) currentFrame[currentFrameCounter].y,
       (float) shadow->player_t.width / 8 , (float) shadow->player_t.height / 4
@@ -163,15 +161,17 @@ void logic() {
     currentFrameCounter++;
   }
 
+  // Controll and gravity
 
-  // Controll
-  
-  if (shadow->player_p.y <= win_screen.y - (float) (shadow->player_t.height / 4) - 50) {
-    vel_y += gravity;
-  } else {
+  vel_y += gravity;
+  if (shadow->player_p.y >=  win_screen.y - (float) (shadow->player_t.height / 4) - 50) {
     vel_y = 0;
+    if (IsKeyPressed(KEY_W)) {
+      vel_y = -30;
+      printf("%s: %f, %f\n",currentAnimation, currentFrame[1].x, currentFrame[1].y);
+    } 
   }
-
+ 
   if (IsKeyDown(KEY_D)) {
     shadow->player_p.x += SPEED;
     strcpy(currentAnimation, "idle-left");
@@ -180,11 +180,6 @@ void logic() {
     shadow->player_p.x -= SPEED;
     strcpy(currentAnimation, "idle-right");
   }
-  if (IsKeyPressed(KEY_W)) {
-    vel_y = -30;
-    printf("%s: %f, %f\n",currentAnimation, currentFrame[1].x, currentFrame[1].y);
-  } 
-
   shadow->player_p.y += vel_y;
 }
 
